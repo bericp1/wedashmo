@@ -1,6 +1,6 @@
 {
   "name": "wedashmo",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A server to have local dash button clicks control local wemo plugs/switches",
   "main": "index.js",
   "scripts": {
