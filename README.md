@@ -16,7 +16,6 @@ Switch/Plug.
    * You can either install it globally with `easy_install` (see their
      documentation) or build/install it somewhere else accessible. Just
      be sure to note the full path to the `wemo` executable
-   * **Note:** The `wemo` command may require 
 
 ## Installation
 
@@ -67,7 +66,7 @@ To use `wedashmo`, you need:
 ### To Start Listening
 
 ```
- $ wedashmo -d 00:11:22:33:44:55 -w 'My Switch' -o /usr/local/bin/wemo
+ $ wedashmo -d 00:11:22:33:44:55 -w 'My Switch' -o /usr/local/bin/wemo -t 3000
 ```
 
 ### Options
@@ -84,7 +83,6 @@ The MAC address of your Dash button. See [Setup](#setup) above.
 
 The exact name of your WeMo Switch or Plug. See [Setup](#setup) above.
 
-
 #### `-o, --ouimeaux [ouimeaux]`
 
 **Optional**
@@ -92,6 +90,15 @@ The exact name of your WeMo Switch or Plug. See [Setup](#setup) above.
 The path to ouimeaux's `wemo` executable. If this isn't provided,
 the `PATH` will be searched automatically for it and the server
 will fail with an error if it couldn't be found.
+
+#### `-t, --timeout [timeout]`
+
+**Optional**
+
+The timeout in milliseconds that subsequent dash button presses 
+should be ignored each time a press is detected.
+
+Default: `3000`
 
 ## API
 
