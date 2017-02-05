@@ -1,0 +1,49 @@
+{
+  "name": "wedashmo",
+  "version": "0.0.1",
+  "description": "A server to have local dash button clicks control local wemo plugs/switches",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test-unit",
+    "test-unit": "NODE_ENV=test mocha './{,!(node_modules)/**/}*.spec.js'",
+    "findbutton": "findbutton"
+  },
+  "bin": {
+    "wedashmo": "./cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bericp1/wedashmo.git"
+  },
+  "keywords": [
+    "wemo",
+    "dash",
+    "amazon-dash",
+    "amazon-dash-button",
+    "homeautomation",
+    "automation"
+  ],
+  "author": "bericp1",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bericp1/wedashmo/issues"
+  },
+  "homepage": "https://github.com/bericp1/wedashmo#readme",
+  "engines": {
+    "node": ">=6.9.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "karma-mocha": "^1.3.0",
+    "mocha": "^3.2.0",
+    "should": "^11.2.0",
+    "sinon": "^1.17.7"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "debounce": "^1.0.0",
+    "extend": "^3.0.0",
+    "node-dash-button": "^0.6.1",
+    "which": "^1.2.12"
+  }
+}
