@@ -10,7 +10,8 @@ program
   .option('-d, --dash <dash_mac_addr>', 'The MAC address of your Dash button. (see docs)')
   .option('-w, --wemo <wemo_name>', 'The name of your WeMo Switch/Plug. (see docs)')
   .option('-o, --ouimeaux [ouimeaux]', 'The path to ouimeaux\'s wemo exexutable. (see docs)')
-  .option('-t, --timeout [timeout]', 'The timeout in milliseconds between button presses.');
+  .option('-t, --timeout [timeout]', 'The timeout in milliseconds between button presses.')
+  .option('-v, --verbose', 'Whether or not to output events to stdout.');
 
 program.parse(process.argv);
 
@@ -22,6 +23,7 @@ if(!program.dash || !program.wemo) {
 
 var dash_addr = program.dash,
   wemo_name = program.wemo,
+  verbose = !!program.verbose,
   options = {};
 
 if(program.ouimeaux) {
@@ -34,10 +36,10 @@ if(program.timeout) {
 try {
   const server = new wedashmo.Server(program.dash, program.wemo, options);
   server
-    .on('starting',   () => console.log('Starting up...'))
-    .on('started',    () => console.log('Now listening...'))
-    .on('press',      () => console.log('Heard press! Attempting to toggle...'))
-    .on('toggle',     () => console.log('Toggle successful!'));
+    .on('starting',   () => verbose && console.log('Starting up...'))
+    .on('started',    () => verbose && console.log('Now listening...'))
+    .on('press',      () => verbose && console.log('Heard press! Attempting to toggle...'))
+    .on('toggle',     () => verbose && console.log('Toggle successful!'));
 
   server.start();
 } catch(e) {

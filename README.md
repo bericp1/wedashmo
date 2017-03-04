@@ -100,6 +100,14 @@ should be ignored each time a press is detected.
 
 Default: `15000`
 
+#### `-v, --verbose`
+
+**Optional**
+
+Whether or not to output server status, detected presses, etc.
+
+Default: `false`
+
 ## API
 
 **TODO**

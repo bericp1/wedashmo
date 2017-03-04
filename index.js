@@ -52,7 +52,7 @@ class Server extends EventEmitter {
     debug('starting listener server');
     this.emit('starting');
 
-    debug('running `wemo list` so we can test for wemo device\'s existence right off the bat.');
+    debug('running `wemo list` so we can test for wemo\'s existence right off the bat...');
     const list = this.wemo('list');
 
     if(list.error) {
@@ -65,6 +65,7 @@ class Server extends EventEmitter {
     var dash = dash_button(this.dash_mac, null, this.options.timeout, 'all');
 
     this.started = true;
+    debug('wemo list successful. listening...');
     this.emit('started', dash);
 
     dash.on("detected", () => {
