@@ -1,14 +1,15 @@
 const mac_regex = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/g;
 const defaults = {
   ouimeaux: null,
-  timeout: 3000
+  timeout: 15000
 };
 
 const EventEmitter = require('events'),
   spawnSync = require('child_process').spawnSync,
 
   dash_button = require('node-dash-button'),
-  extend = require('extend');
+  extend = require('extend'),
+  debug = require('debug')('wedashmo');
 
 class Server extends EventEmitter {
 
@@ -17,12 +18,17 @@ class Server extends EventEmitter {
     if(typeof options !== 'object') options = {};
     options = extend({}, defaults, options);
 
+    debug('constructing listener server');
+    debug('options: %s', JSON.stringify(options));
+
     if(typeof dash_mac !== 'string') {
       throw new Error('Must provide Dash button\'s MAC address.');
     } else if(!mac_regex.test(dash_mac = dash_mac.trim())) {
       throw new Error('Provided MAC address for Dash button is invalid.');
     } else {
+      debug('old mac: %s', dash_mac);
       dash_mac = dash_mac.replace('-', ':').toLowerCase();
+      debug('new mac: %s', dash_mac);
     }
 
     if(typeof wemo_name !== 'string' || !(wemo_name = wemo_name.trim())) {
@@ -30,20 +36,23 @@ class Server extends EventEmitter {
     }
 
     this.started = false;
+    this.last_detected = false;
     this.dash_mac = dash_mac;
     this.wemo_name = wemo_name;
     this.options = options;
 
     if(this.options.ouimeaux === null) {
+      debug('attempting to find wemo using `which` since it wasn\'t passed as an option.');
       this.options.ouimeaux = require('which').sync('wemo');
     }
   }
 
   start(cb) {
     if(typeof cb !== 'function') cb = function() {};
+    debug('starting listener server');
     this.emit('starting');
 
-    // Run `wemo list` so we can test for wemo's existence right off the bat.
+    debug('running `wemo list` so we can test for wemo device\'s existence right off the bat.');
     const list = this.wemo('list');
 
     if(list.error) {
@@ -59,9 +68,17 @@ class Server extends EventEmitter {
     this.emit('started', dash);
 
     dash.on("detected", () => {
-      this.emit('press');
-      this.toggle();
-      this.emit('toggle');
+      debug('press detected');
+      if(!this.last_detected || this.last_detected < (Date.now() - this.options.timeout)) {
+        debug('toggling');
+        this.emit('press');
+        this.last_detected = Date.now();
+        this.toggle();
+        this.emit('toggle');
+      } else {
+        debug('ignoring due to timeout');
+        this.emit('ignored');
+      }
     });
   }
 

@@ -98,7 +98,7 @@ will fail with an error if it couldn't be found.
 The timeout in milliseconds that subsequent dash button presses 
 should be ignored each time a press is detected.
 
-Default: `3000`
+Default: `15000`
 
 ## API
 
