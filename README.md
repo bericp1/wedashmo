@@ -95,7 +95,7 @@ will fail with an error if it couldn't be found.
 
 **Optional**
 
-The timeout in milliseconds that subsequent dash button presses 
+The timeout in milliseconds that subsequent Dash button presses 
 should be ignored each time a press is detected.
 
 Default: `15000`
@@ -112,7 +112,7 @@ Default: `15000`
 
 ## Contribute
 
-Fork, work your beautiful magic, and submit PR.
+Fork, work your beautiful magic, and submit a PR.
 
 ## License (**MIT**)
 
